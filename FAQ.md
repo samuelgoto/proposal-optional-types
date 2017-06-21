@@ -230,7 +230,7 @@ TODO(goto, domenic): are they?
  
 NOTE(domenic): Why? The type checker can tell what interfaces a class implements without any manual annotation.
 
-NOTE(goto): Hum, that's a good point, interfaces being structurally typed. +dimvar@google.com help me out here?
+NOTE(goto): Hum, that's a good point, interfaces being structurally typed. @dimvar help me out here?
 
 NOTE(dimvar): It's like TypeScript. If you define explicitly that a class implements an interface, then the type checker checks that it does. If you don't, then you can pass class instances to places that expect the interface, and you would get warnings there. Another benefit of letting a class specify the interfaces it implements is that it's good for documentation.
 

@@ -40,7 +40,7 @@ As the design choices find convergence in the ["open design questions" section](
  
 With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
-Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased - - rather than rejected -, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
+Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased - rather than rejected -, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
 With that foundation in place, the MVP type system is composed of:
 
@@ -75,11 +75,11 @@ For the time being, we do not define the type checking rules in this document. W
 The design space for subtyping rules is big, and we have picked some semantics below but we understand they are subject to review and change. With that in mind, here is a strawman proposal:
 
 * The **Any** type to be a subtype and supertype of all types.
-* Classes to be **nominally typed** [***](FAQ.md#structural-or-nominal-classes).
+* Classes to be [nominally typed](FAQ.md#structural-or-nominal-classes).
 * Objects types, interfaces and functions to be **structurally typed**.
 * To be safe to use objects with extra properties ([Width subtyping](https://flow.org/en/docs/lang/width-subtyping/)) in a position that is annotated with a specific set of properties.
 * Function parameters to be **contravariant** and function return values to be **covariant** ([Type variance](https://flow.org/en/docs/lang/variance/)).
-* Arrays to be **covariant** [***](FAQ.md#array-variance).
+* Arrays to be [covariant](FAQ.md#array-variance).
 
 In the next section we’ll introduce the new syntax and with that give a lot of examples on these rules.
 
@@ -147,7 +147,7 @@ fetch(“data.json”, c); // Error
 fetch(“data.json”, d); // Error
 ```
  
-Types are [non-nullable by default](FAQ.md#nullabitily-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
+Types are [non-nullable by default](FAQ.md#nullability-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
 
 ```javascript
 // Optional and Nullable Types
