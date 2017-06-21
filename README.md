@@ -5,40 +5,40 @@
  
 This is [stage-0](https://tc39.github.io/process-document/) proposal to add Optional Types to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
-For prior art (e.g. other languages), alternatives (e.g. gradual sound typing, macros and the status quo), challenges and future work we encourage you to start with the [FAQ](FAQ.md).
+For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), challenges and future work we encourage you to start with the [FAQ](FAQ.md).
  
 In the last 10 years, large engineering teams have developed type systems for JavaScript through a variety of preprocessors, transpilers and code editors to scale large codebases.
  
-Most notably, TypeScript (Microsoft) has gained a massive amount of external adoption and is used as the foundation and starting point of this proposal. Flow (Facebook) and the Closure Compiler (Google) have also also been used extensively (although more confined to their respective internal audiences) and their experience informs the design of this proposal too.
+Most notably, **TypeScript** (Microsoft), **Flow** (Facebook) and the **Closure** Compiler (Google) have gained a massive amount of external adoption and is used as the foundation and starting point of this proposal.
  
-Fortunately, these transpilers share a substantial amount of commonality (syntactically and semantically) and we leverage that as much as we can. Notably, at the core of these transpilers and hence at the center of this proposal is an **Optional Type System**: types are used at development-time (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at production-time (e.g. interpretation of javascript for real users in production).
+Fortunately, these transpilers share a substantial amount of commonality (syntactically and semantically) and we leverage that as much as we can. Notably, at the core of these transpilers and hence at the center of this proposal is an **Optional Type System**: types are used at [development-time](FAQ.md#terminology) (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at [production-time](FAQ.md#terminology) (e.g. interpretation of javascript for real users in production).
  
-By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful. An in-browser typechecker works in conjunction with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at debugging-runtime (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)) in addition to errors caught statically. It also works well in conjunction with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at production-runtime.
+By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful. An **in-browser typechecker** works in **conjunction** with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at debugging-runtime (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)) in addition to errors caught statically. It also works well in **conjunction** with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at [production-runtime](FAQ.md#terminology).
 
 ![In-browser type checker](browser.png)
 
-As a general rule of thumb, at its current stage, this is a proposal for adding “an” optional type system to JavaScript more so than adding “this” specific one. To get the ball rolling, we start with a proposal with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a working group to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
+As a general rule of thumb, at its current stage, this is a proposal for adding "**an**" optional type system to JavaScript more so than adding "**this**" specific one. To get the ball rolling, we start with a proposal with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a **working group** to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
  
 With that, at this stage 0, we are generally looking to:
 
 * Gather early feedback/recommendations/suggestions/validation on the general direction, motivation and approach (e.g. sanity check coverage and trade-offs in FAQ)
 * Identify/invite a group of experts interested in the topic (hint: if you are reading this right now chances are you are one of them :)) to form an informal working group.
 
-To kick things off we invite you to take a look at the following strawman and the open design questions section and help us collectively shape what this looks like.
+To kick things off we invite you to take a look at the following [strawman](#strawman) and the [open design questions](FAQ.md#the-type-system) section and help us collectively shape what this looks like.
 
 # Strawman
 
 To a large extent, like it was said earlier, this is more of a proposal for "**a**" typesystem (rather than "**this**" typesystem) and a process to get us there.
  
-We are collecting the set of discussion points in the “open design questions” section (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
+We are collecting the set of discussion points in the ["open design questions" section](FAQ.md#the-type-system) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
  
-As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md).
+As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md#the-type-system), pointing to the discussion point.
  
-As the design choices find convergence in the “open design questions” section we’ll pull them into this section, so hopefully this document should converge to our collective choices.
+As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, so hopefully this document should converge to our collective choices.
  
-With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md): type checking that is processed at development-time/compilation-time/debugging-time only and erased at production-time.
+With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time/compilation-time/debugging-time](FAQ.md#terminology) only and erased at production-time.
 
-Effectively, most of the information in this proposal is applicable to development-time tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased rather than rejected, the semantics of interpretation of javascript in production-mode remain unchanged.
+Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased rather than rejected, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
 With that foundation in place, the MVP type system is composed of:
 
@@ -51,7 +51,7 @@ We start by introducing the basic type taxonomy, the high level idea of the subt
 
 # Type Taxonomy
 
-We could really use some help with the art of sequencing and MVP-ing here (please see section on "open design questions"), but here is our current model for what could form a solid/strong foundation to be built upon.
+We could really use some help with the art of sequencing and MVP-ing here [***](FAQ.md#what-comes-next), but here is our current model for what could form a solid/strong foundation to be built upon.
 
 * The **Any** type: represents any javascript value
 * **Primitive types**: number, boolean, string and symbol
@@ -215,4 +215,4 @@ arr4 = arr2; // Works
 let val: string = arr2[10]; // Works
 ```
  
-Note that this notation is a special case of of generics, so things like Array<? extends Type> aren’t yet allowed until generics are introduced (see section on Future Work in the [FAQ](FAQ.md)).
+Note that this notation is a special case of of generics, so things like Array<? extends Type> aren’t yet allowed until generics are introduced (see section on Future Work in the [FAQ](FAQ.md#generics)).
