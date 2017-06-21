@@ -38,22 +38,22 @@ As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md#th
  
 As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, incrementally making this document converge into our collective choices.
  
-With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology)/[compilation-time](FAQ.md#terminology)/[debugging-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
+With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
-Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased rather than rejected, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
+Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased - - rather than rejected -, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
 With that foundation in place, the MVP type system is composed of:
 
-* A taxonomy of Types
-* Typechecking Rules
-* Subtyping Rules
-* Syntax
+* [A taxonomy of Types](#taxonomy)
+* [Typechecking Rules](#typechecking-rules)
+* [Subtyping Rules](#subtyping-rules)
+* [Syntax](#syntax)
 
-We start by introducing the basic type taxonomy, the high level idea of the subtyping rules and we then later give a lot of examples while introducing the syntax.
+We start by introducing the basic type [taxonomy](#taxonomy), the [typechecking rules](#typechecking-rules), the high level idea of the [subtyping rules](#subtyping-rules) and we then later give a lot of examples while introducing the [syntax](#syntax).
 
 # Type Taxonomy
 
-We could really use some help with the art of sequencing and MVP-ing here [***](FAQ.md#sequencing), but here is our current model for what could form a solid/strong foundation to be built upon.
+We could really use some help with the art of [sequencing](FAQ.md#sequencing) here, but here is our current model for what could form a solid/strong foundation to be built upon.
 
 * The **Any** type: represents any javascript value
 * **Primitive types**: number, boolean, string and symbol
@@ -72,7 +72,7 @@ For the time being, we do not define the type checking rules in this document. W
 
 # Subtyping Rules
 
-The design space for subtyping rules is big, and we have some picked semantics below but we understand these things are subject to change.
+The design space for subtyping rules is big, and we have picked some semantics below but we understand they are subject to review and change. With that in mind, here is a strawman proposal:
 
 * The **Any** type to be a subtype and supertype of all types.
 * Classes to be **nominally typed** [***](FAQ.md#structural-or-nominal-classes).
@@ -147,7 +147,7 @@ fetch(“data.json”, c); // Error
 fetch(“data.json”, d); // Error
 ```
  
-Types are [non-nullable by default](FAQ.md#nullabitliy-default), and types can be made nullable by using explicitly the union type. Function parameters and object properties are required by default and can be made optional by using union with undefined.
+Types are [non-nullable by default](FAQ.md#nullabitily-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
 
 ```javascript
 // Optional and Nullable Types

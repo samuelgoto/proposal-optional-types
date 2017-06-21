@@ -214,9 +214,9 @@ TODO(dimvar): write this up.
 
 TODO(goto): write this up.
 
-## Shorthands for nullable types, optional types and arrays?
+## Shorthands?
 
-TODO(goto): write this up.
+TODO(goto): for nullable types, optional types and arrays.
 
 ## Are varargs supported?
  
