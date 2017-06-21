@@ -3,19 +3,19 @@
  
 This is [stage-0](https://tc39.github.io/process-document/) proposal to add **Optional Types** to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
-For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [challenges](FAQ.md#challenges) and [sequencing](FAQ.md#what-comes-next) we encourage you to start with the [FAQ](FAQ.md).
+For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [challenges](FAQ.md#challenges) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
  
 In the last 10 years, large engineering teams have developed type systems for JavaScript through a variety of preprocessors, transpilers and code editors to scale large codebases.
  
-Most notably, **TypeScript** (Microsoft), **Flow** (Facebook) and the **Closure** Compiler (Google) have gained a massive amount of external adoption and are used as the foundation and starting point of this proposal.
+Most notably, [TypeScript](https://www.typescriptlang.org/) (Microsoft), [Flow](https://flow.org/) (Facebook) and the [Closure](https://developers.google.com/closure/compiler/) Compiler (Google) have gained a massive amount of adoption and are used as the foundation and starting point of this proposal.
  
 Fortunately, these transpilers share a substantial amount of commonality (syntactically and semantically) and we leverage that as much as we can. Notably, at the core of these transpilers and hence at the center of this proposal is an **Optional Type System**: types are used at [development-time](FAQ.md#terminology) (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at [production-time](FAQ.md#terminology) (e.g. interpretation of javascript for real users in production).
  
-By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful. An **in-browser typechecker** works in **conjunction** with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at debugging-runtime (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)) in addition to errors caught statically. It also works well in **conjunction** with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at [production-runtime](FAQ.md#terminology).
+By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful. An **in-browser typechecker** works in **conjunction** with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at [debugging-runtime](FAQ.md#terminology) in addition to errors caught statically (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)). It also works well in **conjunction** with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at [production-runtime](FAQ.md#terminology).
 
 ![In-browser type checker](browser.png)
 
-As a general rule of thumb, at its current stage, this is a proposal for adding "**an**" optional type system to JavaScript more so than adding "**this**" specific one. To get the ball rolling, we start with a strawman proposal with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a **working group** to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
+As a general rule of thumb, at its current stage, this is a proposal for adding "**an**" optional type system to JavaScript more so than adding "**this**" specific one. To get the ball rolling, we start with a [strawman proposal](#strawman) with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a **working group** to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
  
 With that, at this stage 0, we are generally looking to:
 
@@ -26,7 +26,7 @@ To kick things off we invite you to take a look at the following [strawman](#str
 
 # Strawman
 
-To a large extent, like it was said earlier, this is more of a proposal for "**a**" typesystem (rather than "**this**" typesystem) and a process to get us there.
+To a large extent, like it was said [earlier](#introduction), this is more of a proposal for "**a**" typesystem (as opposed to "**this**" typesystem) and a process to get us there.
  
 We are collecting the set of discussion points in the ["open design questions" section](FAQ.md#the-type-system) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
  
@@ -49,7 +49,7 @@ We start by introducing the basic type taxonomy, the high level idea of the subt
 
 # Type Taxonomy
 
-We could really use some help with the art of sequencing and MVP-ing here [***](FAQ.md#what-comes-next), but here is our current model for what could form a solid/strong foundation to be built upon.
+We could really use some help with the art of sequencing and MVP-ing here [***](FAQ.md#sequencing), but here is our current model for what could form a solid/strong foundation to be built upon.
 
 * The **Any** type: represents any javascript value
 * **Primitive types**: number, boolean, string and symbol
@@ -71,11 +71,11 @@ For the time being, we do not define the type checking rules in this document. W
 The design space for subtyping rules is big, and we have some picked semantics below but we understand these things are subject to change.
 
 * The **Any** type to be a subtype and supertype of all types.
-* Classes to be **nominally typed** ***.
+* Classes to be **nominally typed** [***](FAQ.md#structural-or-nominal-classes).
 * Objects types, interfaces and functions to be **structurally typed**.
 * To be safe to use objects with extra properties ([Width subtyping](https://flow.org/en/docs/lang/width-subtyping/)) in a position that is annotated with a specific set of properties.
 * Function parameters to be **contravariant** and function return values to be **covariant** ([Type variance](https://flow.org/en/docs/lang/variance/)).
-* Arrays to be **covariant** ***.
+* Arrays to be **covariant** [***](FAQ.md#array-variance).
 
 In the next section we’ll introduce the new syntax and with that give a lot of examples on these rules.
 
@@ -143,7 +143,7 @@ fetch(“data.json”, c); // Error
 fetch(“data.json”, d); // Error
 ```
  
-Types are [non-nullable by default](https://flow.org/en/docs/types/maybe/) ***, and types can be made nullable by using explicitly the union type. Function parameters and object properties are required by default and can be made optional by using union with undefined.
+Types are [non-nullable by default](FAQ.md#nullabitliy-default), and types can be made nullable by using explicitly the union type. Function parameters and object properties are required by default and can be made optional by using union with undefined.
 
 ```javascript
 // Optional and Nullable Types

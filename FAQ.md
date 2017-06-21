@@ -160,11 +160,8 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 
 ## Open Design Questions
 
-* What’s the the [maximally-minimal](http://wirfs-brock.com/allen/files/papers/standpats-asianplop2016.pdf) subset of features that will lead to a usable type system. Defer features with complex semantics (such as generics) or with dependencies in flight (e.g. typing public/private members) to a later version.
-* Nullability by default or not
 * Pervasive type inference vs. explicit types everywhere (big one)
-* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). 
-* This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
+* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
 * Disallowing implicit coercions 
 * Structural vs. nominal classes 
 * Introducing new interface syntax and concepts (especially classes implementing interfaces) 
@@ -174,10 +171,11 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 * Most things in the subtyping rules? 
 * Null vs. undefined handling, maybe
 
-## What comes next?
+## Sequencing
  
 Here are some of the features available in TypeScript/Flow/Closure that we chose to leave as future work. We don’t believe leaving any of these features out will corner ourselves into adding them later.
  
+* What’s the the [maximally-minimal](http://wirfs-brock.com/allen/files/papers/standpats-asianplop2016.pdf) subset of features that will lead to a usable type system. Defer features with complex semantics (such as generics) or with dependencies in flight (e.g. typing public/private members) to a later version.
 * Generics
 * Enums
 * Intersection types
@@ -202,11 +200,19 @@ If we wanted to only warn for things that throw, then we would warn when calling
  
 NOTE(domenic): there is a conflict between static analysis and dynamic analysis. Consider the example let x : number = true ? 0 : false; A runtime type system would have no problem with this, whereas what you're proposing would disallow it. This is probably worth highlighting at a higher level in the document: it seems like you are leaning toward a statically-checkable model, which there is precedent for for JS but I believe other optionally-typed languages went a different direction.
 
-## Why are classes nominal?
+## Nullability default
+
+TODO(goto, dimvar, gilad): write this up.
+
+## Structural or nominal classes?
  
 JS is generally structurally typed, so introducing nominal typing sounds awkward.
  
 TODO(dimvar): write this up.
+
+## Array variance?
+
+TODO(goto): write this up.
 
 ## Shorthands for nullable types, optional types and arrays?
 
