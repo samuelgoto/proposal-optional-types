@@ -42,7 +42,7 @@ The biggest challenge we face keeping the status quo is twofold:
 * Fragmentation of the ecosystem
  
 First, a javascript-based type system increases the chances we’ll see it adopted by [in-browser developer tools](#terminology) (which already process javascript heavily), significantly decreasing the friction to access/use them.
-In addition to access, an in-browser type checker can increase the extent to which runtime errors are checked at debugging-time with in-browser debuggers (as an example of what can be made possible, see [dart’s runtime checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
+In addition to access, an [in-browser type checker](#terminology) can increase the extent to which runtime errors are checked at [debugging-time](#terminology) with in-browser debuggers (as an example of what can be made possible, see [dart’s runtime checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
  
 Secondly, libraries written in one of the existing type system [transpilers](#terminology) are not interoperable with the others: large teams needing to depend on or export libraries end up in an incohesive and incoherent compilation environment.
  
@@ -74,6 +74,10 @@ Macros are great for defining little languages within a language that are suited
 * Types can easily be stripped by preprocessors, so it is not necessary to use a macro expander to remove types. Moreover, it is cheaper to strip types on the server, rather than rely on runtime macro expansion in the browser.
 
 #Challenges
+
+## Does this need to be part of the language?
+
+TODO(goto)
 
 ## Does this grow the language unnecessarily?
 
