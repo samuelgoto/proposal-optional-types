@@ -1,15 +1,13 @@
-# An Optional Type System for JS  
-
 # Introduction
 
  
-This is [stage-0](https://tc39.github.io/process-document/) proposal to add Optional Types to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
+This is [stage-0](https://tc39.github.io/process-document/) proposal to add **Optional Types** to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
-For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), challenges and future work we encourage you to start with the [FAQ](FAQ.md).
+For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [challenges](FAQ.md#challenges) and [sequencing](FAQ.md#what-comes-next) we encourage you to start with the [FAQ](FAQ.md).
  
 In the last 10 years, large engineering teams have developed type systems for JavaScript through a variety of preprocessors, transpilers and code editors to scale large codebases.
  
-Most notably, **TypeScript** (Microsoft), **Flow** (Facebook) and the **Closure** Compiler (Google) have gained a massive amount of external adoption and is used as the foundation and starting point of this proposal.
+Most notably, **TypeScript** (Microsoft), **Flow** (Facebook) and the **Closure** Compiler (Google) have gained a massive amount of external adoption and are used as the foundation and starting point of this proposal.
  
 Fortunately, these transpilers share a substantial amount of commonality (syntactically and semantically) and we leverage that as much as we can. Notably, at the core of these transpilers and hence at the center of this proposal is an **Optional Type System**: types are used at [development-time](FAQ.md#terminology) (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at [production-time](FAQ.md#terminology) (e.g. interpretation of javascript for real users in production).
  
@@ -17,7 +15,7 @@ By baking an optional type system into the standard javascript language, we enab
 
 ![In-browser type checker](browser.png)
 
-As a general rule of thumb, at its current stage, this is a proposal for adding "**an**" optional type system to JavaScript more so than adding "**this**" specific one. To get the ball rolling, we start with a proposal with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a **working group** to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
+As a general rule of thumb, at its current stage, this is a proposal for adding "**an**" optional type system to JavaScript more so than adding "**this**" specific one. To get the ball rolling, we start with a strawman proposal with some broad strokes (to give an idea of feasibility and desirability), but we are looking to form/identify a **working group** to collectively define the specifics of the type system at later stages of the process (TC39 members, typescript/closure/flow experts, type system experts, developer tooling experts, etc).
  
 With that, at this stage 0, we are generally looking to:
 
@@ -34,9 +32,9 @@ We are collecting the set of discussion points in the ["open design questions" s
  
 As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md#the-type-system), pointing to the discussion point.
  
-As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, so hopefully this document should converge to our collective choices.
+As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, incrementally making this document converge into our collective choices.
  
-With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time/compilation-time/debugging-time](FAQ.md#terminology) only and erased at production-time.
+With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology)/[compilation-time](FAQ.md#terminology)/[debugging-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
 Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased rather than rejected, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
@@ -47,7 +45,7 @@ With that foundation in place, the MVP type system is composed of:
 * Subtyping Rules
 * Syntax
 
-We start by introducing the basic type taxonomy, the high level idea of the subtyping rules and we then later introduce the syntax and give a lot of examples.
+We start by introducing the basic type taxonomy, the high level idea of the subtyping rules and we then later give a lot of examples while introducing the syntax.
 
 # Type Taxonomy
 
@@ -126,7 +124,7 @@ let c: number = concat("foo", "bar"); // Error!
  
 It is safe to substitute a function that accepts a more general argument (contravariant inputs) and returns a more specific value (covariant outputs).
 
-``` 
+```javascript
 // Function subtyping
 function fetch(
   url: string, 
@@ -178,7 +176,7 @@ var person: {
 Interfaces provide the ability to name structural types. Interfaces have no run-time representation and are purely a compile-time construct. Class syntax is extended so that classes can declare the interfaces they implement.
  
 ```javascript
-Examples
+// Examples
 interface Bar {
   hello(a: number): number;
 }
