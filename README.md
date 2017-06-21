@@ -98,20 +98,7 @@ let e: number = Infinity; // Works!
  
 // TODO(goto): craft really good examples for Any
 ```
- 
-With Union Types you can represent types that can have one of several distinct representations. A value of union type of A | B is a value that is either of type A or type B.
 
-```javascript 
-// Union Types
-let x: string | number; 
-let test: boolean = true; 
-x = "hello"; // Ok 
-x = 42; // Ok 
-x = test; // Error, boolean not assignable 
-x = test ? 5 : "five"; // Ok 
-x = test ? 0 : false; // Error, number | boolean not assignable
-```
- 
 Functions are extended to type parameters and return values:
  
 ```javascript
@@ -145,6 +132,19 @@ fetch(“data.json”, a); // Works
 fetch(“data.json”, b); // Works
 fetch(“data.json”, c); // Error
 fetch(“data.json”, d); // Error
+```
+
+With Union Types you can represent types that can have one of several distinct representations. A value of union type of A | B is a value that is either of type A or type B.
+
+```javascript 
+// Union Types
+let x: string | number; 
+let test: boolean = true; 
+x = "hello"; // Ok 
+x = 42; // Ok 
+x = test; // Error, boolean not assignable 
+x = test ? 5 : "five"; // Ok 
+x = test ? 0 : false; // Error, number | boolean not assignable
 ```
  
 Types are [non-nullable by default](FAQ.md#nullability-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
