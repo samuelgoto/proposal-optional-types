@@ -2,14 +2,15 @@
 
 # Terminology
  
-* **Transpilers**: Tools that consume JavaScript, perhaps with some non-standard syntactic constructs, and lower it to more "vanilla" JavaScript, e.g., by turning ES6 to ES5, or by removing type annotations. In this context, TypeScript, Flow, and Closure Compiler. In this context, TypeScript, Flow and Closure Compiler.
+* **Transpilers**: Tools that consume JavaScript, perhaps with some non-standard syntactic constructs, and lower it to more "vanilla" JavaScript, e.g., by turning ES6 to ES5, or by removing type annotations. In this context, TypeScript, Flow, and Closure Compiler.
 * **Coding-time**: the development stage where code is being edited, typically in a code editor (e.g. emacs, vim, notepad) or in an IDE (e.g. eclipse, intellij, visual studio)
-* **Compilation-time**: the development stage where code is being compiled/minified.
-* **Debugging-time**: the development stage where code is being debugged in a runtime scenario. Expected to have more runtime information (e.g. profiling) at the cost of performance.
+* **Compilation-time**: the development stage where code is being compiled/minified (e.g. babel, tsc, closure compiler, etc).
+* **Debugging-time**: the development stage where code is being debugged in a runtime scenario (e.g. browser developer tools). Expected to have more runtime information (e.g. profiling) at the cost of performance.
 * **Development-time**: the union of coding-time, compilation-time and debugging-time where the programmer iterates on their code.
-* **Production-time**: the deployment stage where code that is highly optimized gets used by real users and is expected to be as efficient as possible.
+* **Production-time**: the deployment stage where code that is highly optimized gets used by real users and is expected to be as efficient as possible (e.g. chrome, firefox, internet explorer, safari, etc).
 * **Checked-mode**: a debugging-time environment where runtime type errors are checked (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
 * **Production-mode**: a production-time environment where type errors are erased and performance isn’t degraded.
+* **In-browser type checker**: a hypothetical addition to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
 
 # Where is this at?
 
@@ -19,15 +20,15 @@ We still have more questions than answers, but we think the direction is right.
  
 We have a general intuition that this is a highly desirable feature, by the levels of adoption and maturity of existing type systems (some in place for over 10 years).
  
-We also think we have collected solid data points (in the industry with interpreters and transpilers and in academia) to encourage us to look at Optional Type Systems (as opposed to Sound Gradual Types).
+We also think we have collected solid data points (in the industry with interpreters and transpilers and in academia) to encourage us to look at Optional Type Systems (as opposed to [Sound Gradual Types](#sound-gradual-typing)).
  
 We find more commonalities than disparities in existing production-ready type systems for JavaScript (typescript, flow and closure), but we acknowledge that there are disparities and that the devil is in the details.
  
-We find the trend of adding types to dynamic languages (e.g., PHP, Python, and Dart) encouraging. 
+We find the trend of [adding types to dynamic languages](#other-languages) (e.g., PHP, Python, and Dart) encouraging. 
  
-We don’t feel strongly about the specifics of the type system, in as much as we feel that one should exist :) To get the ball rolling, we start with a proposal and hope we all collectively take it from here.
+We don’t feel strongly about the specifics of the type system, in as much as we feel that one should exist :) To get the ball rolling, we start with a [strawman proposal](README.md#strawman) and hope we all collectively take it from here.
  
-We don’t think this is not a novel idea (for more info, refer to the prior-art section). We believe that the circumstances are different and more favorable to revisiting the subject -  more specifically the adoption of TypeScript, data points on [experiments with sound type systems](https://groups.google.com/forum/#!msg/strengthen-js/ojj3TDxbHpQ/5ENNAiUzEgAJ), convergence of syntax/semantics, and precedence in other languages.
+We don’t think this is not a [novel idea](#prior-art). We believe that the circumstances are different and more favorable to [revisiting](#tc39-discussions) the subject -  more specifically the adoption of TypeScript, data points on [experiments with sound type systems](https://groups.google.com/forum/#!msg/strengthen-js/ojj3TDxbHpQ/5ENNAiUzEgAJ), convergence of syntax/semantics, and [precedence in other languages](#other-languages).
 
 # Alternatives considered
 
@@ -40,10 +41,10 @@ The biggest challenge we face keeping the status quo is twofold:
 * Reach of type checking for web developers
 * Fragmentation of the ecosystem
  
-First, a javascript-based type system increases the chances we’ll see it adopted by in-browser developer tools (which already process javascript heavily), significantly decreasing the friction to access/use them.
+First, a javascript-based type system increases the chances we’ll see it adopted by [in-browser developer tools](#terminology) (which already process javascript heavily), significantly decreasing the friction to access/use them.
 In addition to access, an in-browser type checker can increase the extent to which runtime errors are checked at debugging-time with in-browser debuggers (as an example of what can be made possible, see [dart’s runtime checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
  
-Secondly, libraries written in one of the existing type system transpilers (e.g. typescript/flow/closure) are not interoperable with the others: large teams needing to depend on or export libraries end up in an incohesive and incoherent compilation environment.
+Secondly, libraries written in one of the existing type system [transpilers](#terminology) are not interoperable with the others: large teams needing to depend on or export libraries end up in an incohesive and incoherent compilation environment.
  
 With the [extensible web manifesto](https://extensiblewebmanifesto.org/) process in mind, our intuition is that we currently have a good balance between maturity/convergence/adoption and usefulness between the main polyfills/transpilers/compilers that is worth baking into the language the more popular/converged features.
 
@@ -158,19 +159,6 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 
 # The Type System
 
-## Open Design Questions
-
-* Pervasive type inference vs. explicit types everywhere (big one)
-* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
-* Disallowing implicit coercions 
-* Structural vs. nominal classes 
-* Introducing new interface syntax and concepts (especially classes implementing interfaces) 
-* Union types in MVP or not 
-* Generics in MVP or not or special-cases only 
-* Shorthands in MVP or not (includes: nullability/undefinedability ?, array [], maybe even function => as opposed to generics) 
-* Most things in the subtyping rules? 
-* Null vs. undefined handling, maybe
-
 ## Sequencing
  
 Here are some of the features available in TypeScript/Flow/Closure that we chose to leave as future work. We don’t believe leaving any of these features out will corner ourselves into adding them later.
@@ -187,6 +175,19 @@ Here are some of the features available in TypeScript/Flow/Closure that we chose
 * Ambients
 * Void
 * Shorthand for optional types: TypeScript and Flow uses “?” preceding the variable name, whereas Closure uses “=” succeeding the typevariable name.
+
+## Open Design Questions
+
+* Pervasive type inference vs. explicit types everywhere (big one)
+* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
+* Disallowing implicit coercions 
+* Structural vs. nominal classes 
+* Introducing new interface syntax and concepts (especially classes implementing interfaces) 
+* Union types in MVP or not 
+* Generics in MVP or not or special-cases only 
+* Shorthands in MVP or not (includes: nullability/undefinedability ?, array [], maybe even function => as opposed to generics) 
+* Most things in the subtyping rules? 
+* Null vs. undefined handling, maybe
 
 ## This is more restrictive than JS. Is that on purpose?
  

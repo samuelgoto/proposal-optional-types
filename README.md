@@ -15,7 +15,7 @@ Notably, at the core of these transpilers and hence at the center of this propos
  
 By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful.
 
-An **in-browser typechecker** works in **conjunction** with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at [debugging-runtime](FAQ.md#terminology) in addition to errors caught statically (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)). It also works well in **conjunction** with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at [production-runtime](FAQ.md#terminology).
+An [in-browser typechecker](FAQ.md#terminology) works in **conjunction** with current transpilers who’d have a richer, typed and interoperable (between transpilers) compilation target to use and the added ability to catch type errors at [debugging-runtime](FAQ.md#terminology) in addition to errors caught statically (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)). It also works well in **conjunction** with minifiers/optimizers which can strip the types prior to deployment or safely assume that they’ll be ignored at [production-runtime](FAQ.md#terminology).
 
 ![In-browser type checker](browser.png)
 
