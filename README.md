@@ -1,7 +1,7 @@
 # Introduction
 
  
-This is [stage-0](https://tc39.github.io/process-document/) proposal to add **Optional Types** to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
+This is a [stage-0](https://tc39.github.io/process-document/) proposal to add [Optional Types](FAQ.md#terminology) to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
 For [prior art](FAQ.md#prior-art) (e.g. other languages), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [challenges](FAQ.md#challenges) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
  
@@ -11,7 +11,7 @@ Most notably, [TypeScript](https://www.typescriptlang.org/) (Microsoft), [Flow](
  
 Fortunately, these transpilers share a substantial amount of commonality (syntactically and semantically) and we leverage that as much as we can.
 
-Notably, at the core of these transpilers and hence at the center of this proposal is an **Optional Type System**: types are used at [development-time](FAQ.md#terminology) (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at [production-time](FAQ.md#terminology) (e.g. interpretation of javascript for real users in production).
+Notably, at the core of these transpilers and hence at the center of this proposal is an [Optional Type System](FAQ.md#terminology): types are used at [development-time](FAQ.md#terminology) (e.g. on preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc) and are erased at [production-time](FAQ.md#terminology) (e.g. interpretation of javascript for real users in production).
  
 By baking an optional type system into the standard javascript language, we enable browsers to include type checking in developer tools making type systems (a) more broadly accessible to web developers and (b) more powerful.
 

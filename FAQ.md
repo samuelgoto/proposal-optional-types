@@ -11,6 +11,7 @@
 * **Checked-mode**: a debugging-time environment where runtime type errors are checked (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
 * **Production-mode**: a production-time environment where type errors are erased and performance isn’t degraded.
 * **In-browser type checker**: a hypothetical addition to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
+* **Optional Type System**: A typesystem where (a) run-time semantics are independent of type system and (b) type annotations are optional ([@bracha.org](http://bracha.org/pluggable-types.pdf)).
 
 # Where is this at?
 
