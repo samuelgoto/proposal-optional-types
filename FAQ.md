@@ -2,6 +2,7 @@
 
 # Terminology
  
+* **Optional Type System**: A typesystem where (a) run-time semantics are independent of type system and (b) type annotations are optional ([@bracha.org](http://bracha.org/pluggable-types.pdf)).
 * **Transpilers**: Tools that consume JavaScript, perhaps with some non-standard syntactic constructs, and lower it to more "vanilla" JavaScript, e.g., by turning ES6 to ES5, or by removing type annotations. In this context, TypeScript, Flow, and Closure Compiler.
 * **Coding-time**: the development stage where code is being edited, typically in a code editor (e.g. emacs, vim, notepad) or in an IDE (e.g. eclipse, intellij, visual studio)
 * **Compilation-time**: the development stage where code is being compiled/minified (e.g. babel, tsc, closure compiler, etc).
@@ -11,7 +12,6 @@
 * **Checked-mode**: a debugging-time environment where runtime type errors are checked (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
 * **Production-mode**: a production-time environment where type errors are erased and performance isn’t degraded.
 * **In-browser type checker**: a hypothetical addition to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
-* **Optional Type System**: A typesystem where (a) run-time semantics are independent of type system and (b) type annotations are optional ([@bracha.org](http://bracha.org/pluggable-types.pdf)).
 
 # Where is this at?
 
