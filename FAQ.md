@@ -11,7 +11,10 @@
 * **Production-time**: the deployment stage where code that is highly optimized gets used by real users and is expected to be as efficient as possible (e.g. chrome, firefox, internet explorer, safari, etc).
 * **Checked-mode**: a debugging-time environment where runtime type errors are checked (see [dart’s checked mode](https://www.dartlang.org/articles/language/optional-types#checked-mode)).
 * **Production-mode**: a production-time environment where type errors are erased and performance isn’t degraded.
-* **In-browser type checker**: a hypothetical addition to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
+* **Type-checker**: a development-time tool that performs type checking comforming to a specification (e.g. preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc).
+* **Interpreter**: a development-time and production-time tool that interprets Javascript and, besides erasing types, remains otherwise unchanged to be comformant with the standard.
+* **In-browser type checker**: a hypothetical type-checker added to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
+
 
 # Where is this at?
 
