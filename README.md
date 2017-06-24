@@ -80,6 +80,7 @@ The design space for subtyping rules is big, and we have picked some semantics b
 * Objects types, interfaces and functions to be **structurally typed**.
 * To be safe to use objects with extra properties ([Width subtyping](https://flow.org/en/docs/lang/width-subtyping/)) in a position that is annotated with a specific set of properties.
 * Function parameters to be **contravariant** and function return values to be **covariant** ([Type variance](https://flow.org/en/docs/lang/variance/)).
+* NOTE(erights): should methods be **covariant** (per dart)? TODO(goto): check with @gbracha.
 * Arrays to be [covariant](FAQ.md#array-variance).
 
 In the next section we’ll introduce the new syntax and with that give a lot of examples on these rules.

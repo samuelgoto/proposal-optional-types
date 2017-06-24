@@ -14,17 +14,18 @@
 * **Type-checker**: a development-time tool that performs type checking comforming to a specification (e.g. preprocessors, IDEs, code editors, browser developer tools/mode/debuggers, etc).
 * **Interpreter**: a development-time and production-time tool that interprets Javascript and, besides erasing types, remains otherwise unchanged to be comformant with the standard.
 * **In-browser type checker**: a hypothetical type-checker added to existing in-browser developer tools (e.g. [safari's type profiler](https://webkit.org/blog/3846/type-profiling-and-code-coverage-profiling-for-javascript/)).
+* **MVP**: the minimum-viable-product, also known as [maximally-minimal](http://wirfs-brock.com/allen/files/papers/standpats-asianplop2016.pdf).
 
 
 # Where is this at?
 
-This is, by far, what you’d call “drafty”, “strawman” or Stage 0 :)
+This is, by far, what you’d call "drafty", "strawman" or Stage 0 :)
  
 We still have more questions than answers, but we think the direction is right.
  
 We have a general intuition that this is a highly desirable feature, by the levels of adoption and maturity of existing type systems (some in place for over 10 years).
  
-We also think we have collected solid data points (in the industry with interpreters and transpilers and in academia) to encourage us to look at Optional Type Systems (as opposed to [Sound Gradual Types](#sound-gradual-typing)).
+We also think we have collected solid data points (in the industry with interpreters and transpilers and in academia) to encourage us to look at Optional Type Systems (as opposed to [sound gradual types](#sound-gradual-typing)).
  
 We find more commonalities than disparities in existing production-ready type systems for JavaScript (typescript, flow and closure), but we acknowledge that there are disparities and that the devil is in the details.
  
@@ -32,7 +33,11 @@ We find the trend of [adding types to dynamic languages](#other-languages) (e.g.
  
 We don’t feel strongly about the specifics of the type system, in as much as we feel that one should exist :) To get the ball rolling, we start with a [strawman proposal](README.md#strawman) and hope we all collectively take it from here.
  
-We don’t think this is not a [novel idea](#prior-art). We believe that the circumstances are different and more favorable to [revisiting](#tc39-discussions) the subject -  more specifically the adoption of TypeScript, data points on [experiments with sound type systems](https://groups.google.com/forum/#!msg/strengthen-js/ojj3TDxbHpQ/5ENNAiUzEgAJ), convergence of syntax/semantics, and [precedence in other languages](#other-languages).
+We don’t think this is not a [novel idea](#prior-art). We believe that the **circumstances** are different and more favorable to [revisiting](#tc39-discussions) the subject, more specifically:
+
+* the level of adoption of TypeScript
+* industry experiments with [sound gradual typing](https://groups.google.com/forum/#!msg/strengthen-js/ojj3TDxbHpQ/5ENNAiUzEgAJ) and
+* precedence in [other languages](#other-languages).
 
 # Alternatives considered
 
@@ -42,7 +47,7 @@ What’s wrong with leaving things as is?
  
 The biggest challenge we face keeping the status quo is twofold:
  
-* Reach of type checking for web developers
+* Reach/power of type checkers for web developers
 * Fragmentation of the ecosystem
  
 First, a javascript-based type system increases the chances we’ll see it adopted by [in-browser developer tools](#terminology) (which already process javascript heavily), significantly decreasing the friction to access/use them.
@@ -81,7 +86,7 @@ Macros are great for defining little languages within a language that are suited
 
 ## Does this need to be part of the language?
 
-TODO(goto)
+Our intuition is that it does, for the [same reasons](#status-quo) that keeping the status quo is hard. We also think that tc39 **is** the [right venue](#is-tc39-the-right-venue).
 
 ## Does this grow the language unnecessarily?
 
@@ -164,10 +169,17 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 * 2011 [Dependent Types for Javascript](https://arxiv.org/abs/1112.4106) ([pdf](http://people.cs.uchicago.edu/~rchugh/static/papers/oopsla12-djs.pdf))
 * 2014 2014-09 [TC39 Discussion on Types](https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#types)
 * 2015 [ES8 gradual typing](https://esdiscuss.org/topic/es8-proposal-optional-static-typing) and [part2](https://esdiscuss.org/topic/optional-static-typing-part-2) and [ecmascript-types](https://github.com/sirisian/ecmascript-types).
+* NOTE(erights): find reference to guards and trademarks and rationalize it.
 
 # The Type System
 
-## Sequencing
+## Strategy
+
+* To pick the minimal amount of features that lead to a cohesive, coherent and usable type system (see [sequencing](#sequencing)).
+* To be a **strict subset** of production quality and battle-tested type systems (typescript, flow or closure), rather than a testbed for research (see [new ideas](#new-ideas)).
+* **A** good type system is better than **None** that is perfect.
+
+## Sequencing?
  
 Here are some of the features available in TypeScript/Flow/Closure that we chose to leave as future work. We don’t believe leaving any of these features out will corner ourselves into adding them later.
  
@@ -184,7 +196,13 @@ Here are some of the features available in TypeScript/Flow/Closure that we chose
 * Void
 * Shorthand for optional types: TypeScript and Flow uses “?” preceding the variable name, whereas Closure uses “=” succeeding the typevariable name.
 
-## Open Design Questions
+## New ideas?
+
+Our [general strategy](#design-principles) is to pick a conservative subset of existing typesystems, rather than invent new things. We believe that [transpilers](#terminology) are a much more effective venue to innovate and experiment and that, with the test of time, features move from them to the standard language. We encourage you to work with the [transpilers](#terminology) and use them as a place to prototype your ideas and gather users before extending the [MVP](#terminology).
+
+## Open Design Questions?
+
+NOTE(domenic):
 
 * Pervasive type inference vs. explicit types everywhere (big one)
 * Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
@@ -209,6 +227,39 @@ If we wanted to only warn for things that throw, then we would warn when calling
  
 NOTE(domenic): there is a conflict between static analysis and dynamic analysis. Consider the example let x : number = true ? 0 : false; A runtime type system would have no problem with this, whereas what you're proposing would disallow it. This is probably worth highlighting at a higher level in the document: it seems like you are leaning toward a statically-checkable model, which there is precedent for for JS but I believe other optionally-typed languages went a different direction.
 
+## Are you breaking the web?
+
+Nope. See [are all existing programs correct?](#are-all-existing-programs-correct).
+
+## Are all existing programs correct?
+
+NOTE(erights): specifically, are they all still statically valid? and if not, how do you avoid #breakingtheweb?
+
+[Interpreters](#terminology) remain unchanged, hence keeping all existing programs correct. For the newly introduced [typechecker](#terminology) some (previously valid) programs may be (desirably) invalidated.
+
+```javascript
+var x = 'foo'; // OK
+var y= x - 1; // OK
+// Typechecker Error, although Interpretation remains semantically and statically valid.
+var z = 1 - true; // Error
+```
+
+## What's the default for untyped programs?
+
+NOTE(erights): does all untyped code default to Any? We found by experience that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
+
+## What does it mean to erase?
+
+NOTE(erights, goto, dimvar): what happens in the following scenarios?
+NOTE(erights): observe that, performing these checks doesn't necessarily #breaktheweb, since you are introducing new syntax.
+NOTE(goto): oh, interesting observation, since NOT throwing a parsing error here means that we won't be able to throw a parsing error EVER.
+
+```javascript
+var x: TYPE_THAT_DOES_NOT_EXIST = 1;
+var y: ARE_ANY_CHARACTERS_ALLOWED< = 2;
+var z: WOULD_INTERPRETERS_CHECK_IF_THIS_WAS_DEFINED_PREVIOUSLY = 3;
+```
+
 ## Nullability default
 
 TODO(goto, dimvar, gilad): write this up.
@@ -218,6 +269,8 @@ TODO(goto, dimvar, gilad): write this up.
 JS is generally structurally typed, so introducing nominal typing sounds awkward.
  
 TODO(dimvar): write this up.
+
+NOTE(erights): is this closer to the semantics of the runtime checks, like instanceof?
 
 ## Array variance?
 
