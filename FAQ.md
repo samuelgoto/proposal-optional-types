@@ -177,7 +177,7 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 
 * To pick the minimal amount of features that lead to a cohesive, coherent and usable type system (see [sequencing](#sequencing)).
 * To be a **strict subset** of production quality and battle-tested type systems (typescript, flow or closure), rather than a testbed for research (see [new ideas](#new-ideas)).
-* **A** good type system is better than **None** that is perfect.
+* A **good and materialized** type system is better than a **perfect and hypothetical** one.
 
 ## Sequencing?
  
