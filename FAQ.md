@@ -140,22 +140,72 @@ It appears in other programming languages, as polyfills and as previous proposal
  
 Python, PHP and Dart are most probably the closest analogies. Nevertheless, here is a complete set of languages we found had related/interesting type systems.
  
+### Python
+
+From [PEP 0484](https://www.python.org/dev/peps/pep-0484/) and [PEP 482](https://www.python.org/dev/peps/pep-0482/).
+
 * Python: [function annotations](http://legacy.python.org/dev/peps/pep-3107/) and [type hints](https://www.python.org/dev/peps/pep-0484/)
 * Python’s [Function Annotations](http://legacy.python.org/dev/peps/pep-3107/) leaves semantics deliberately out
 * Python’s [Type Hints](https://www.python.org/dev/peps/pep-0484/) standardizes semantics
 * [Literature overview](https://www.python.org/dev/peps/pep-0482/) for Python’s type hints
 * Python [@contract’s annotations](https://andreacensi.github.io/contracts/) for type systems
+
+"While these annotations are available at runtime through the usual __annotations__ attribute, no type checking happens at runtime . Instead, the proposal assumes the existence of a separate off-line type checker which users can run over their source code voluntarily."
+
+"The type system supports unions, generic types, and a special type named Any which is consistent with (i.e. assignable to and from) all types."
+
+TODO(goto): give a better overview of PEP0482.
+TODO(goto): chat with @collinwinter to gather ideas from python.
+
+```python
+>>> def greeting(name: str) -> str:
+    return 'Hello ' + name
+>>> greeting('Sam')
+'Hello Sam'
+>>> greeting.__annotations__
+{'name': <class 'str'>, 'return': <class 'str'>}
+```
+
+No first-class syntax support for explicitly marking variables as being of a specific type is added by this PEP. To help with type inference in complex cases, a comment of the following format may be used:
+
+```python
+x = []  # type: List[Employee]
+x, y, z = [], [], []  # type: List[int], List[int], List[str]
+x, y, z = [], [], []  # type: (List[int], List[int], List[str])
+a, b, *c = range(5)   # type: float, float, List[float]
+x = [
+   1,
+   2,
+]  # type: List[int]
+```
+
+By default generic types are considered invariant in all type variables, which means that values for variables annotated with types like List[Employee] must exactly match the type annotation -- no subclasses or superclasses of the type parameter (in this example Employee ) are allowed.
+
+To facilitate the declaration of container types where covariant or contravariant type checking is acceptable, type variables accept keyword arguments covariant=True or contravariant=True .
+
+### Dart
+
+TODO(goto): write down about dart.
+
+* [Optional Types in Dart](https://www.dartlang.org/articles/language/optional-types)
+
+### PHP
+
+TODO(goto): write down about PHP.
+
+* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
+* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
+
+### Related languages
+
 * [Strongtalk](http://www.strongtalk.org/): optional type checking for smalltalk
 * [Strongtalk: typechecking smalltalk in a production environment](http://www.bracha.org/oopsla93.pdf)
 * [Ruby’s gradual typing system](http://blog.codeclimate.com/blog/2014/05/06/gradual-type-checking-for-ruby/)
-* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
 * Java8’s [Type Annotations and Pluggable Type Systems](http://docs.oracle.com/javase/tutorial/java/annotations/type_annotations.html)
 * [Type System as Macros](http://www.ccs.neu.edu/home/stchang/pubs/ckg-popl2017.pdf)
 * Scheme Steering Committee [Position Statement](http://scheme-reports.org/2009/position-statement.html)
-* [Optional Types in Dart](https://www.dartlang.org/articles/language/optional-types)
 * [Lbstanza optional types](http://lbstanza.org/optional_typing.html)
 * [N4j](https://numberfour.github.io/n4js/faq/comparison-typescript.html)
-* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
 * [BabyJ](http://pubs.doc.ic.ac.uk/ObjectBasedToClassBased/ObjectBasedToClassBased.pdf) was a research exploration of optional types for JS. 
 * [In defense of Soundiness: a Manifesto](http://dimvar.github.io/papers/soundiness-preprint.pdf)
 * [Is Sound Gradual Typing dead?](http://www.ccs.neu.edu/racket/pubs/popl16-tfgnvf.pdf)
