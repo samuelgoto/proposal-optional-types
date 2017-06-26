@@ -302,18 +302,22 @@ Nope. See [are all existing programs correct?](#are-all-existing-programs-correc
 
 NOTE(erights): specifically, are they all still statically valid? and if not, how do you avoid #breakingtheweb?
 
-[Interpreters](#terminology) remain unchanged, hence keeping all existing programs correct. For the newly introduced [typechecker](#terminology) some (previously valid) programs may be (desirably) invalidated.
+[Interpreters](#terminology) remain unchanged, hence keeping all existing programs correct.
+
+For the newly introduced [typechecker](#terminology) some (previously valid) programs may be (desirably) invalidated.
 
 ```javascript
 var x = 'foo'; // OK
 var y= x - 1; // OK
-// Typechecker Error, although Interpretation remains semantically and statically valid.
 var z = 1 - true; // Error
+// Typechecker Error, although Interpretation remains semantically and statically valid.
 ```
 
 ## What's the default for untyped programs?
 
-NOTE(erights): does all untyped code default to Any? We found by experience that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
+All unannotated variable/parameter/etc is the same as annotating it with Any.
+
+NOTE(erights): does all untyped code default to Any? We found in our experience with another language that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
 
 ## What does it mean to erase?
 
