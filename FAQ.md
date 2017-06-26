@@ -138,7 +138,7 @@ It appears in other programming languages, as polyfills and as previous proposal
 
 ## Other languages?
  
-Python, PHP and Dart are most probably the closest analogies. Nevertheless, here is a complete set of languages we found had related/interesting type systems.
+Python, PHP and Dart are most probably the closest analogies so we start with those. We go over a complete set of languages we found had related/interesting type systems at the end of this section.
  
 ### Python
 
