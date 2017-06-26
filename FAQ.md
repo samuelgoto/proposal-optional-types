@@ -1,5 +1,22 @@
 # FAQ
 
+# Table of contents
+
+* [Terminology](#terminology)
+* [Where is this at?](#where-is-this-at)
+* [Alternatives considered](#alternatives-considered)
+    * [Status Quo](#status-quo)
+    * [Sound Gradual Typing](#sound-gradual-typing)
+    * [Decorators](#decorators)
+    * [Macros](#macros)
+* [Challenges](#challenges)
+* [Prior art](#prior-art)
+    * [Other languages](#other-languages): ([dart](#dart), [python](#python), [php](#php))
+    * [TC39 discussions](#tc39-discussions)
+* [The Type System](#the-type-system)
+    * [Strategy](#strategy)
+    * [Sequencing](#sequencing)
+
 # Terminology
  
 * **Optional Type System**: A typesystem where (a) run-time semantics are independent of type system and (b) type annotations are optional ([@bracha.org](http://bracha.org/pluggable-types.pdf)).
@@ -82,7 +99,7 @@ Macros are great for defining little languages within a language that are suited
 * Types are a core part of a language, so it is good to have a single type system, specified in one place. Macros can allow several incompatible type systems to be created, which increases fragmentation.
 * Types can easily be stripped by preprocessors, so it is not necessary to use a macro expander to remove types. Moreover, it is cheaper to strip types on the server, rather than rely on runtime macro expansion in the browser.
 
-#Challenges
+# Challenges
 
 ## Does this need to be part of the language?
 
