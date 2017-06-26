@@ -234,9 +234,9 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 * 2002 [Javascript 2.0: Evolving a Language for Evolving Systems](http://www-archive.mozilla.org/js/language/evolvingJS.pdf)
 * 2006 [Type parameters](http://web.archive.org/web/20160425220933/http://wiki.ecmascript.org/doku.php?id=proposals:type_parameters), [Type System](http://web.archive.org/web/20141214152853/http://wiki.ecmascript.org/doku.php?id=clarification:type_system) and [Structural Types and typing of initializers](http://web.archive.org/web/20150622061920/http://wiki.ecmascript.org/doku.php?id=proposals:structural_types_and_typing_of_initializers)
 * 2011 [Dependent Types for Javascript](https://arxiv.org/abs/1112.4106) ([pdf](http://people.cs.uchicago.edu/~rchugh/static/papers/oopsla12-djs.pdf))
-* 2014 2014-09 [TC39 Discussion on Types](https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#types)
+* 2011 [Guards](http://web.archive.org/web/20161123223114/http://wiki.ecmascript.org:80/doku.php?id=strawman:guards) and [Trademarks](http://web.archive.org/web/20141214075933/http://wiki.ecmascript.org/doku.php?id=strawman:trademarks)
+* 2014 [TC39 Discussion on Types](https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#types): adding syntax without semantics.
 * 2015 [ES8 gradual typing](https://esdiscuss.org/topic/es8-proposal-optional-static-typing) and [part2](https://esdiscuss.org/topic/optional-static-typing-part-2) and [ecmascript-types](https://github.com/sirisian/ecmascript-types).
-* NOTE(erights): find reference to guards and trademarks and rationalize it.
 
 # The Type System
 
