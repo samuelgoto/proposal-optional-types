@@ -2,7 +2,7 @@
  
 This is a [stage-0](https://tc39.github.io/process-document/) proposal to add [Optional Types](FAQ.md#terminology) to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
-For prior art (e.g. [other languages](FAQ.md#other-languages), [past proposals](FAQ.md#tc39-discussions)), alternatives considered (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), considerations ([should it be part of the language?](FAQ.md#does-this-need-to-be-part-of-the-language) and [is tc39 the right venue?](FAQ.md#is-tc39-the-right-venue)) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
+For prior art (e.g. [other languages](FAQ.md#other-languages), [past proposals](FAQ.md#tc39-discussions)), alternatives considered (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [considerations](FAQ.md#considerations) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
  
 In the last 10 years, large engineering teams have developed type systems for JavaScript through a variety of preprocessors, transpilers and code editors to scale large codebases.
  
