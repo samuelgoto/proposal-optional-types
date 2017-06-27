@@ -410,6 +410,71 @@ NOTE(domenic): This seems subtle and hard to get my head around. (But not a real
 
 ### Type Inference?
  
-NOTE: Flow departs from TypeScript significantly in its inference abilities, and I could imagine something much more like Flow. (Or, in general, wanting something with stronger inference capabilities, closer to Haskell/ML than Java in the amount of typing it requires.)
+NOTE(domenic): Flow departs from TypeScript significantly in its inference abilities, and I could imagine something much more like Flow. (Or, in general, wanting something with stronger inference capabilities, closer to Haskell/ML than Java in the amount of typing it requires.)
  
-TODO(goto): articulate this better.
+NOTE(waldemar): how do you deal with the fact that type inference is a moving target? How do you deal with backwards compatibility? For example, if you start with "no standardized inference rule" how do you avoid breaking compatibility with type checkers when you introduce "some inference rules"? Likewise, if you start with "some inference rules" how do you avoid breaking compatibility when you want to introduce "more inference rules"? For example, versioning is an obvious/trivial solution, but has its taxes.
+
+NOTE(waldemar): can one make inferences based on assignments or usage?
+ 
+TODO(goto, dimvar): articulate this better.
+
+## Parsing?
+
+NOTE(goto): @waldemar used a term to describe grammars that saved the tokens in a "union"-like structure and that resolved the ambiguity at later stages of parsing ("cover grammar"?), as something to be avoided (e.g. leads to complexity and leads to security challenges whitelisting programs). He cited arrow functions (=>) as an example. Reach out to find what is the right term.
+
+NOTE(waldemar): is it possible to avoid "cover grammars"? Is it possible to make a distinction between syntax expressions and type expressions? For example:
+
+```javascript
+// How does a parser know whether "<" is a "less-than" token or a "open-generic" token without looking ahead?
+... a: b<c> ...
+// Arrow functions introduced a similar challenge, take the following example:
+... (a, b) ...
+// One only knows whether that's a "parenthesis expression" -> "comma expression" -> "variable reference" or
+// "parameter list" -> "parameter" **after** seeing the token "=>".
+// So that
+... (a, b) => ....
+// Is parsed differently than
+... (a, b); ...
+// And that introduces complexity in the parser as well as security challenges whitelisting programs.
+```
+
+## Dynamically generated types?
+
+@waldemar: to what extent do typecheckers look into dynamically generated types/classes? For example:
+
+```javascript
+class B {};
+// TODO(goto): this actually doesn't work, come up with a better example.
+eval("class A extends B {}");
+var b: B = new A();
+// Does this generate a type error in the typechecker?
+```
+
+## Scoping?
+
+@waldemar: are types available in a flat namespace? For example:
+
+```javascript
+function a() { 
+  class B { foo() { console.log("bar"); } }; 
+  var b = new B(); 
+  b.foo();
+}
+
+class B {    
+}
+
+var c:B = new B();
+// NOTE(waldemar): which B does c refer to from a type-checking perspective?
+// NOTE(goto, dimvar): types follows the interpreter scoping rules. For example, 
+// the typechecker complains on the following line that "property foo()" does not
+// exist on type "B".
+c.foo(); // Error
+```
+
+## Modules?
+
+NOTE(waldemar): namespaces, scoping for identifiers versus types.
+
+## Destructuring?
+
