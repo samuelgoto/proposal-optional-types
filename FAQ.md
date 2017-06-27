@@ -9,7 +9,7 @@
     * [Sound Gradual Typing](#sound-gradual-typing)
     * [Decorators](#decorators)
     * [Macros](#macros)
-* [Challenges](#challenges)
+* [Considerations](#considerations)
 * [Prior art](#prior-art)
     * [Other languages](#other-languages): ([dart](#dart), [python](#python))
     * [TC39 discussions](#tc39-discussions)
@@ -99,7 +99,7 @@ Macros are great for defining little languages within a language that are suited
 * Types are a core part of a language, so it is good to have a single type system, specified in one place. Macros can allow several incompatible type systems to be created, which increases fragmentation.
 * Types can easily be stripped by preprocessors, so it is not necessary to use a macro expander to remove types. Moreover, it is cheaper to strip types on the server, rather than rely on runtime macro expansion in the browser.
 
-# Challenges
+# Considerations
 
 ## Does this need to be part of the language?
 
