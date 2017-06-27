@@ -103,7 +103,12 @@ Macros are great for defining little languages within a language that are suited
 
 ## Does this need to be part of the language?
 
-Our intuition is that it does, for the [same reasons](#status-quo) that keeping the status quo is hard. We also think that tc39 **is** the [right venue](#is-tc39-the-right-venue).
+Our intuition is that it does, for the [same reasons](#status-quo) that keeping the status quo is not ideal:
+
+* an [in-browser type checker](#terminology) can substantially increase the reach of type systems and their ability to catch [debugging-time](#terminology) errors, and
+* browsers are currently heavily invested in javascript and its tooling ecosystem.
+
+We also think that tc39 **is** the [most natural venue](#is-tc39-the-right-venue) to standardize a typechecker.
 
 ## Does this grow the language unnecessarily?
 
@@ -133,7 +138,11 @@ TODO(goto): articulate this better.
 ## Is TC39 the right venue?
  
 We believe that the type system should be baked into the standard language and that TC39 is the right venue.
-However, this proposal is primarily targeted to development tools used at development-time rather than production-time engines, and, in its current formation, there aren’t that many recurring representatives of development tooling (e.g. compilers, transpilers, minifiers, debuggers, profilers, etc). We wish to introduce a venue in TC39 where authors of tooling feel comfortable and interested to come and collaborate on the evolution of the typesystem.
+However, this proposal is primarily targeted towards a [typechecker](#terminology) used at [development-time](#terminology) rather than [production-time](#terminology) [interpreters](#terminology), and, in its current formation, there aren’t that many recurring representatives of developer tools (e.g. compilers, transpilers, minifiers, debuggers, profilers, etc).
+
+Our hope is that TC39 would be open to introducing a venue/channel where authors of tools feel comfortable and interested to come and collaborate on the evolution of the typesystem.
+
+@erights: from a specification perspective, to solidify the separation between the interpretation semantics and the typechecking semantics, it might be worth exploring describing them in separate docs, such as how JSON and i18n is handled.
 
 ## Network and parsing cost?
  
