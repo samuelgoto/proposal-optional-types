@@ -11,7 +11,7 @@
     * [Macros](#macros)
 * [Challenges](#challenges)
 * [Prior art](#prior-art)
-    * [Other languages](#other-languages): ([dart](#dart), [python](#python), [php](#php))
+    * [Other languages](#other-languages): ([dart](#dart), [python](#python))
     * [TC39 discussions](#tc39-discussions)
 * [The Type System](#the-type-system)
     * [Strategy](#strategy)
@@ -46,7 +46,7 @@ We also think we have collected solid data points (in the industry with interpre
  
 We find more commonalities than disparities in existing production-ready type systems for JavaScript (typescript, flow and closure), but we acknowledge that there are disparities and that the devil is in the details.
  
-We find the trend of [adding types to dynamic languages](#other-languages) (e.g., PHP, Python, and Dart) encouraging. 
+We find the trend of [adding types to dynamic languages](#other-languages) (e.g. Python, and Dart) encouraging. 
  
 We don’t feel strongly about the specifics of the type system, in as much as we feel that one should exist :) To get the ball rolling, we start with a [strawman proposal](README.md#strawman) and hope we all collectively take it from here.
  
@@ -155,7 +155,7 @@ It appears in other programming languages, as polyfills and as previous proposal
 
 ## Other languages?
  
-Python, PHP and Dart are most probably the closest analogies so we start with those. We go over a complete set of languages we found had related/interesting type systems at the end of this section.
+Python and Dart are most probably the closest analogies so we start with those. We go over a complete set of languages we found had related/interesting type systems at the end of this section.
  
 ### Python
 
@@ -205,16 +205,12 @@ To facilitate the declaration of container types where covariant or contravarian
 TODO(goto): write down about dart.
 
 * [Optional Types in Dart](https://www.dartlang.org/articles/language/optional-types)
-
-### PHP
-
-TODO(goto): write down about PHP.
-
-* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
-* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
+* [A Stronger Dart for Everyone](http://news.dartlang.org/2017/06/a-stronger-dart-for-everyone.html)
 
 ### Related languages
 
+* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
+* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
 * [Strongtalk](http://www.strongtalk.org/): optional type checking for smalltalk
 * [Strongtalk: typechecking smalltalk in a production environment](http://www.bracha.org/oopsla93.pdf)
 * [Ruby’s gradual typing system](http://blog.codeclimate.com/blog/2014/05/06/gradual-type-checking-for-ruby/)
