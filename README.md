@@ -76,12 +76,12 @@ For the time being, we do not define the type checking rules in this document. W
 The design space for subtyping rules is big, and we have picked some semantics below but we understand they are subject to review and change. With that in mind, here is a strawman proposal:
 
 * The **Any** type to be a subtype and supertype of all types.
-* Classes to be [nominally typed](FAQ.md#structural-or-nominal-classes).
+* Classes to be [nominally typed](https://github.com/samuelgoto/proposal-optional-types/issues/4).
 * Objects types, interfaces and functions to be **structurally typed**.
 * To be safe to use objects with extra properties ([Width subtyping](https://flow.org/en/docs/lang/width-subtyping/)) in a position that is annotated with a specific set of properties.
 * Function parameters to be **contravariant** and function return values to be **covariant** ([Type variance](https://flow.org/en/docs/lang/variance/)).
 * NOTE(erights): should methods be **covariant** (per dart)? TODO(goto): check with @gbracha.
-* Arrays to be [covariant](FAQ.md#array-variance).
+* Arrays to be [covariant](https://github.com/samuelgoto/proposal-optional-types/issues/13).
 
 In the next section we’ll introduce the new syntax and with that give a lot of examples on these rules.
 

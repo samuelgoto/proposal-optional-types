@@ -274,14 +274,9 @@ Our [general strategy](#design-principles) is to pick a conservative subset of e
 
 ## Open Design Questions?
 
-NOTE(domenic):
-
 * Pervasive type inference vs. explicit types everywhere (big one)
-* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
 * Disallowing implicit coercions 
-* Structural vs. nominal classes 
-* Introducing new interface syntax and concepts (especially classes implementing interfaces) 
-* Union types in MVP or not 
+* Union types in MVP or not
 * Generics in MVP or not or special-cases only 
 * Shorthands in MVP or not (includes: nullability/undefinedability ?, array [], maybe even function => as opposed to generics) 
 * Most things in the subtyping rules? 
@@ -324,33 +319,6 @@ All unannotated variable/parameter/etc is the same as annotating it with Any.
 
 NOTE(erights): does all untyped code default to Any? We found in our experience with another language that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
 
-## What does it mean to erase?
-
-NOTE(erights, goto, dimvar): what happens in the following scenarios?
-NOTE(erights): observe that, performing these checks doesn't necessarily #breaktheweb, since you are introducing new syntax.
-NOTE(goto): oh, interesting observation, since NOT throwing a parsing error here means that we won't be able to throw a parsing error EVER.
-
-```javascript
-var x: TYPE_THAT_DOES_NOT_EXIST = 1;
-var y: ARE_ANY_CHARACTERS_ALLOWED< = 2;
-var z: WOULD_INTERPRETERS_CHECK_IF_THIS_WAS_DEFINED_PREVIOUSLY = 3;
-```
-
-## Nullability default
-
-TODO(goto, dimvar, gilad): write this up.
-
-## Structural or nominal classes?
- 
-JS is generally structurally typed, so introducing nominal typing sounds awkward.
- 
-TODO(dimvar): write this up.
-
-NOTE(erights): is this closer to the semantics of the runtime checks, like instanceof?
-
-## Array variance?
-
-TODO(goto): write this up.
 
 ## Shorthands?
 
@@ -363,20 +331,6 @@ TODO(goto, domenic): are they?
 ## Are spread operators supported?
  
 TODO(goto, domenic): are they?
-
-## Do we need to explicitly annotate classes implementing interfaces?
- 
-NOTE(domenic): Why? The type checker can tell what interfaces a class implements without any manual annotation.
-
-NOTE(goto): Hum, that's a good point, interfaces being structurally typed. @dimvar help me out here?
-
-NOTE(dimvar): It's like TypeScript. If you define explicitly that a class implements an interface, then the type checker checks that it does. If you don't, then you can pass class instances to places that expect the interface, and you would get warnings there. Another benefit of letting a class specify the interfaces it implements is that it's good for documentation.
-
-NOTE(domenic): That's a pretty dubious value proposition, IMO, for using up such valuable syntactic space and a keyword. (For example, people have proposed using `implements` in this position for runtime mixins.)
-
-NOTE(dimvar): Letting a class specify that it implements an interface has a few advantages: 1) An author of the library/module can say that class A implements B, and have that checked, even if there is no place in the library where an instance of A is passed to a context that expects a B. 2) When A explicitly says that it implements B, then checking that A is a subtype of B is quick, it's a tag check, otherwise, we have to structurally check it, which involves looking at all properties of B. If the specific word implements is too valuable, we could find some other keyword, or new syntax to express this.
-
-NOTE(domenic): Yes, I understood the advantages, I just think they are really marginal for the weight they add to a supposed MVP. (Especially one based on speed in a system which is known to make things slower.)
 
 ## Generics
 
@@ -417,73 +371,4 @@ Trailing parameters with default values should be considered optional by the typ
  
 NOTE(domenic): This seems subtle and hard to get my head around. (But not a real problem, just something tricky to work through.) E.g. if I declare this function: function a(value: number = 5) is that a "syntax error" since I didn't write number | undefined?
 
-### Type Inference?
- 
-NOTE(domenic): Flow departs from TypeScript significantly in its inference abilities, and I could imagine something much more like Flow. (Or, in general, wanting something with stronger inference capabilities, closer to Haskell/ML than Java in the amount of typing it requires.)
- 
-NOTE(waldemar): how do you deal with the fact that type inference is a moving target? How do you deal with backwards compatibility? For example, if you start with "no standardized inference rule" how do you avoid breaking compatibility with type checkers when you introduce "some inference rules"? Likewise, if you start with "some inference rules" how do you avoid breaking compatibility when you want to introduce "more inference rules"? For example, versioning is an obvious/trivial solution, but has its taxes.
-
-NOTE(waldemar): can one make inferences based on assignments or usage?
- 
-TODO(goto, dimvar): articulate this better.
-
-## Parsing?
-
-NOTE(goto): @waldemar used a term to describe grammars that saved the tokens in a "union"-like structure and that resolved the ambiguity at later stages of parsing ("cover grammar"?), as something to be avoided (e.g. leads to complexity and leads to security challenges whitelisting programs). He cited arrow functions (=>) as an example. Reach out to find what is the right term.
-
-NOTE(waldemar): is it possible to avoid "cover grammars"? Is it possible to make a distinction between syntax expressions and type expressions? For example:
-
-```javascript
-// How does a parser know whether "<" is a "less-than" token or a "open-generic" token without looking ahead?
-... a: b<c> ...
-// Arrow functions introduced a similar challenge, take the following example:
-... (a, b) ...
-// One only knows whether that's a "parenthesis expression" -> "comma expression" -> "variable reference" or
-// "parameter list" -> "parameter" **after** seeing the token "=>".
-// So that
-... (a, b) => ....
-// Is parsed differently than
-... (a, b); ...
-// And that introduces complexity in the parser as well as security challenges whitelisting programs.
-```
-
-## Dynamically generated types?
-
-@waldemar: to what extent do typecheckers look into dynamically generated types/classes? For example:
-
-```javascript
-class B {};
-// TODO(goto): this actually doesn't work, come up with a better example.
-eval("class A extends B {}");
-var b: B = new A();
-// Does this generate a type error in the typechecker?
-```
-
-## Scoping?
-
-@waldemar: are types available in a flat namespace? For example:
-
-```javascript
-function a() { 
-  class B { foo() { console.log("bar"); } }; 
-  var b = new B(); 
-  b.foo();
-}
-
-class B {    
-}
-
-var c:B = new B();
-// NOTE(waldemar): which B does c refer to from a type-checking perspective?
-// NOTE(goto, dimvar): types follows the interpreter scoping rules. For example, 
-// the typechecker complains on the following line that "property foo()" does not
-// exist on type "B".
-c.foo(); // Error
-```
-
-## Modules?
-
-NOTE(waldemar): namespaces, scoping for identifiers versus types.
-
-## Destructuring?
 
