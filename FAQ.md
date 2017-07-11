@@ -133,7 +133,16 @@ NOTE(adamk): Not sure what this question means...are you worried people will con
 
 ## Are transpilers still needed?
 
-TODO(goto): articulate this better.
+Yes.
+
+Along the lines of the [Extensible Web Manifesto](https://extensiblewebmanifesto.org), it is critical to the long-term health of the web to tighten the feedback loop between editors of web standadrs and web developers. Transpilers have played and will continue to play two important roles:
+
+* prototyping, experimenting and innovating type system features
+* prototyping, experimenting and innovating language features
+
+For example, in many ways transpilers pioneered things like (a) classes, (b) public/private fields and (c) modules before they were baked into the language, showing the way. Along the same lines, their ability to innovate more quickly on type system features like (a) generics, (b) operator overloading, (c) enums, etc is a key part of the process to bake them into the language's type system.
+
+We hope that transpilers will continue to play a role prototyping, experimenting and innovating, fundamentally **polyfilling** features for javascript that simplify and streamline the process of standardizing APIs that already have implementations and significant real-world usage.
 
 ## Is TC39 the right venue?
  
