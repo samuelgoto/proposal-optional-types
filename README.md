@@ -33,13 +33,11 @@ To kick things off we invite you to take a look at the following [strawman](#str
 
 To a large extent, like it was said [earlier](#introduction), this is more of a proposal for "**a**" typesystem (as opposed to "**this**" typesystem) and a process to get us there.
  
-We are collecting the set of discussion points in the ["open design questions" section](FAQ.md#the-type-system) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
+We are collecting the set of discussion points [here](https://github.com/samuelgoto/proposal-optional-types/issues) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
+
+As the design choices find convergence we’ll pull them into this section, incrementally making this document converge into our collective choices.
  
-As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md#the-type-system), pointing to the discussion point.
- 
-As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, incrementally making this document converge into our collective choices.
- 
-With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
+With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is [Optional Typing](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
 Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased - rather than rejected -, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
@@ -61,7 +59,7 @@ We could really use some help with the art of [sequencing](FAQ.md#sequencing) he
 * The **Null** and **Undefined** types
 * **Built-in Object Types**: the built-in standard object types (Object, Function, Error, Array, Iterable, Promise, Number, Math, Date, Map, etc)
 * **User-defined Object Types**: structural types, interfaces, classes, functions arrays
-* **Union Types** (***): types that represent values that may have one of several distinct representations.
+* **Union Types**: types that represent values that may have one of several distinct representations.
 
 TODO(goto, domenic): A major missing piece is the type definitions for the standard library. We should also say something about the type definitions for the web platform, since that's JS's real standard library.
 
