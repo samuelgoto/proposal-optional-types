@@ -33,9 +33,7 @@ To kick things off we invite you to take a look at the following [strawman](#str
 
 To a large extent, like it was said [earlier](#introduction), this is more of a proposal for "**a**" typesystem (as opposed to "**this**" typesystem) and a process to get us there.
  
-We are collecting the set of discussion points [here](https://github.com/samuelgoto/proposal-optional-types/issues) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
-
-As the design choices find convergence we’ll pull them into this section, incrementally making this document converge into our collective choices.
+We are collecting the set of discussion points [here](https://github.com/samuelgoto/proposal-optional-types/issues) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc) and as the design choices find convergence we’ll pull them into this section, incrementally making this document converge into our collective choices.
  
 With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is [Optional Typing](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
@@ -147,7 +145,7 @@ x = test ? 5 : "five"; // Ok
 x = test ? 0 : false; // Error, number | boolean not assignable
 ```
  
-Types are [non-nullable by default](FAQ.md#nullability-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
+Types are [non-nullable by default](https://github.com/samuelgoto/proposal-optional-types/issues/9), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
 
 ```javascript
 // Optional and Nullable Types
