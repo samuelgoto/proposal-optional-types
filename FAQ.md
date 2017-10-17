@@ -1,5 +1,26 @@
 # FAQ
 
+# Table of contents
+
+* [Terminology](#terminology)
+* [Where is this at?](#where-is-this-at)
+* [Alternatives considered?](#alternatives-considered)
+    * [Status Quo?](#status-quo)
+    * [Sound Gradual Typing?](#sound-gradual-typing)
+    * [Decorators?](#decorators)
+    * [Macros?](#macros)
+* [Considerations?](#considerations)
+    * [Does this need to be part of the language?](#does-this-need-to-be-part-of-the-language)
+    * [Does this grow the language unnecessarily?](#does-this-grow-the-language-unnecessarily)
+    * [What's the role of transpilers?](#are-transpilers-still-needed)
+    * [Is TC39 the right venue?](#is-tc39-the-right-venue)
+* [Prior art?](#prior-art)
+    * [TC39 discussions?](#tc39-discussions)
+    * [Other languages?](#other-languages)
+* [The Type System?](#the-type-system)
+    * [Strategy?](#strategy)
+    * [Sequencing?](#sequencing)
+
 # Terminology
  
 * **Optional Type System**: A typesystem where (a) run-time semantics are independent of type system and (b) type annotations are optional ([@bracha.org](http://bracha.org/pluggable-types.pdf)).
@@ -29,7 +50,7 @@ We also think we have collected solid data points (in the industry with interpre
  
 We find more commonalities than disparities in existing production-ready type systems for JavaScript (typescript, flow and closure), but we acknowledge that there are disparities and that the devil is in the details.
  
-We find the trend of [adding types to dynamic languages](#other-languages) (e.g., PHP, Python, and Dart) encouraging. 
+We find the trend of [adding types to dynamic languages](#other-languages) (e.g. Python, and Dart) encouraging. 
  
 We don’t feel strongly about the specifics of the type system, in as much as we feel that one should exist :) To get the ball rolling, we start with a [strawman proposal](README.md#strawman) and hope we all collectively take it from here.
  
@@ -82,11 +103,16 @@ Macros are great for defining little languages within a language that are suited
 * Types are a core part of a language, so it is good to have a single type system, specified in one place. Macros can allow several incompatible type systems to be created, which increases fragmentation.
 * Types can easily be stripped by preprocessors, so it is not necessary to use a macro expander to remove types. Moreover, it is cheaper to strip types on the server, rather than rely on runtime macro expansion in the browser.
 
-#Challenges
+# Considerations
 
 ## Does this need to be part of the language?
 
-Our intuition is that it does, for the [same reasons](#status-quo) that keeping the status quo is hard. We also think that tc39 **is** the [right venue](#is-tc39-the-right-venue).
+Our intuition is that it does, for the [same reasons](#status-quo) that keeping the status quo is not ideal:
+
+* an [in-browser type checker](#terminology) can substantially increase the reach of type systems and their ability to catch [debugging-time](#terminology) errors, and
+* browsers are currently heavily invested in javascript and its tooling ecosystem.
+
+We also think that tc39 **is** the [most natural venue](#is-tc39-the-right-venue) to standardize a typechecker.
 
 ## Does this grow the language unnecessarily?
 
@@ -111,12 +137,25 @@ NOTE(adamk): Not sure what this question means...are you worried people will con
 
 ## Are transpilers still needed?
 
-TODO(goto): articulate this better.
+Yes.
+
+Along the lines of the [Extensible Web Manifesto](https://extensiblewebmanifesto.org), it is critical to the long-term health of the web to tighten the feedback loop between editors of web standadrs and web developers. Transpilers have played and will continue to play two important roles:
+
+* prototyping, experimenting and innovating type system features
+* prototyping, experimenting and innovating language features
+
+For example, in many ways transpilers pioneered things like (a) classes, (b) public/private fields and (c) modules before they were baked into the language, showing the way. Along the same lines, their ability to innovate more quickly on type system features like (a) generics, (b) operator overloading, (c) enums, etc is a key part of the process to bake them into the language's type system.
+
+We hope that transpilers will continue to play a role prototyping, experimenting and innovating, fundamentally **polyfilling** features for javascript that simplify and streamline the process of standardizing APIs that already have implementations and significant real-world usage.
 
 ## Is TC39 the right venue?
  
 We believe that the type system should be baked into the standard language and that TC39 is the right venue.
-However, this proposal is primarily targeted to development tools used at development-time rather than production-time engines, and, in its current formation, there aren’t that many recurring representatives of development tooling (e.g. compilers, transpilers, minifiers, debuggers, profilers, etc). We wish to introduce a venue in TC39 where authors of tooling feel comfortable and interested to come and collaborate on the evolution of the typesystem.
+However, this proposal is primarily targeted towards a [typechecker](#terminology) used at [development-time](#terminology) rather than [production-time](#terminology) [interpreters](#terminology), and, in its current formation, there aren’t that many recurring representatives of developer tools (e.g. compilers, transpilers, minifiers, debuggers, profilers, etc).
+
+Our hope is that TC39 would be open to introducing a venue/channel where authors of tools feel comfortable and interested to come and collaborate on the evolution of the typesystem.
+
+@erights: from a specification perspective, to solidify the separation between the interpretation semantics and the typechecking semantics, it might be worth exploring describing them in separate docs, such as how JSON and i18n is handled.
 
 ## Network and parsing cost?
  
@@ -138,7 +177,7 @@ It appears in other programming languages, as polyfills and as previous proposal
 
 ## Other languages?
  
-Python, PHP and Dart are most probably the closest analogies so we start with those. We go over a complete set of languages we found had related/interesting type systems at the end of this section.
+Python and Dart are most probably the closest analogies so we start with those. We go over a complete set of languages we found had related/interesting type systems at the end of this section.
  
 ### Python
 
@@ -188,16 +227,12 @@ To facilitate the declaration of container types where covariant or contravarian
 TODO(goto): write down about dart.
 
 * [Optional Types in Dart](https://www.dartlang.org/articles/language/optional-types)
-
-### PHP
-
-TODO(goto): write down about PHP.
-
-* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
-* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
+* [A Stronger Dart for Everyone](http://news.dartlang.org/2017/06/a-stronger-dart-for-everyone.html)
 
 ### Related languages
 
+* [PHP’s gradual typing system](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration): type hinting
+* Facebook’s [Hack](http://hacklang.org/) language, a typed variant of PHP.
 * [Strongtalk](http://www.strongtalk.org/): optional type checking for smalltalk
 * [Strongtalk: typechecking smalltalk in a production environment](http://www.bracha.org/oopsla93.pdf)
 * [Ruby’s gradual typing system](http://blog.codeclimate.com/blog/2014/05/06/gradual-type-checking-for-ruby/)
@@ -217,16 +252,16 @@ In TC39 this isn’t a new idea either. Here are the discussions we were able to
 * 2002 [Javascript 2.0: Evolving a Language for Evolving Systems](http://www-archive.mozilla.org/js/language/evolvingJS.pdf)
 * 2006 [Type parameters](http://web.archive.org/web/20160425220933/http://wiki.ecmascript.org/doku.php?id=proposals:type_parameters), [Type System](http://web.archive.org/web/20141214152853/http://wiki.ecmascript.org/doku.php?id=clarification:type_system) and [Structural Types and typing of initializers](http://web.archive.org/web/20150622061920/http://wiki.ecmascript.org/doku.php?id=proposals:structural_types_and_typing_of_initializers)
 * 2011 [Dependent Types for Javascript](https://arxiv.org/abs/1112.4106) ([pdf](http://people.cs.uchicago.edu/~rchugh/static/papers/oopsla12-djs.pdf))
-* 2014 2014-09 [TC39 Discussion on Types](https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#types)
+* 2011 [Guards](http://web.archive.org/web/20161123223114/http://wiki.ecmascript.org:80/doku.php?id=strawman:guards) and [Trademarks](http://web.archive.org/web/20141214075933/http://wiki.ecmascript.org/doku.php?id=strawman:trademarks)
+* 2014 [TC39 Discussion on Types](https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#types): adding syntax without semantics.
 * 2015 [ES8 gradual typing](https://esdiscuss.org/topic/es8-proposal-optional-static-typing) and [part2](https://esdiscuss.org/topic/optional-static-typing-part-2) and [ecmascript-types](https://github.com/sirisian/ecmascript-types).
-* NOTE(erights): find reference to guards and trademarks and rationalize it.
 
 # The Type System
 
 ## Strategy
 
 * To pick the minimal amount of features that lead to a cohesive, coherent and usable type system (see [sequencing](#sequencing)).
-* To be a **strict subset** of production quality and battle-tested type systems (typescript, flow or closure), rather than a testbed for research (see [new ideas](#new-ideas)).
+* With the **benefit of hindsight**, to be a **strict subset** of production quality and battle-tested type systems (typescript, flow or closure), rather than a testbed for research (see [new ideas](#new-ideas)).
 * A **good and materialized** type system is better than a **perfect and hypothetical** one.
 
 ## Sequencing?
@@ -252,14 +287,9 @@ Our [general strategy](#design-principles) is to pick a conservative subset of e
 
 ## Open Design Questions?
 
-NOTE(domenic):
-
 * Pervasive type inference vs. explicit types everywhere (big one)
-* Runtime vs. ahead of time focus (my `let x : number = false ? "string" : 0` example). This may be in the non-negotiable category though (like unsound optional types), in which case that should be stated. 
 * Disallowing implicit coercions 
-* Structural vs. nominal classes 
-* Introducing new interface syntax and concepts (especially classes implementing interfaces) 
-* Union types in MVP or not 
+* Union types in MVP or not
 * Generics in MVP or not or special-cases only 
 * Shorthands in MVP or not (includes: nullability/undefinedability ?, array [], maybe even function => as opposed to generics) 
 * Most things in the subtyping rules? 
@@ -285,46 +315,23 @@ Nope. See [are all existing programs correct?](#are-all-existing-programs-correc
 
 NOTE(erights): specifically, are they all still statically valid? and if not, how do you avoid #breakingtheweb?
 
-[Interpreters](#terminology) remain unchanged, hence keeping all existing programs correct. For the newly introduced [typechecker](#terminology) some (previously valid) programs may be (desirably) invalidated.
+[Interpreters](#terminology) remain unchanged, hence keeping all existing programs correct.
+
+For the newly introduced [typechecker](#terminology) some (previously valid) programs may be (desirably) invalidated.
 
 ```javascript
 var x = 'foo'; // OK
 var y= x - 1; // OK
-// Typechecker Error, although Interpretation remains semantically and statically valid.
 var z = 1 - true; // Error
+// Typechecker Error, although Interpretation remains semantically and statically valid.
 ```
 
 ## What's the default for untyped programs?
 
-NOTE(erights): does all untyped code default to Any? We found by experience that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
+All unannotated variable/parameter/etc is the same as annotating it with Any.
 
-## What does it mean to erase?
+NOTE(erights): does all untyped code default to Any? We found in our experience with another language that it is useful sometime to use an unamed Type to be a better default in certain occasions / compilation contexts.
 
-NOTE(erights, goto, dimvar): what happens in the following scenarios?
-NOTE(erights): observe that, performing these checks doesn't necessarily #breaktheweb, since you are introducing new syntax.
-NOTE(goto): oh, interesting observation, since NOT throwing a parsing error here means that we won't be able to throw a parsing error EVER.
-
-```javascript
-var x: TYPE_THAT_DOES_NOT_EXIST = 1;
-var y: ARE_ANY_CHARACTERS_ALLOWED< = 2;
-var z: WOULD_INTERPRETERS_CHECK_IF_THIS_WAS_DEFINED_PREVIOUSLY = 3;
-```
-
-## Nullability default
-
-TODO(goto, dimvar, gilad): write this up.
-
-## Structural or nominal classes?
- 
-JS is generally structurally typed, so introducing nominal typing sounds awkward.
- 
-TODO(dimvar): write this up.
-
-NOTE(erights): is this closer to the semantics of the runtime checks, like instanceof?
-
-## Array variance?
-
-TODO(goto): write this up.
 
 ## Shorthands?
 
@@ -337,20 +344,6 @@ TODO(goto, domenic): are they?
 ## Are spread operators supported?
  
 TODO(goto, domenic): are they?
-
-## Do we need to explicitly annotate classes implementing interfaces?
- 
-NOTE(domenic): Why? The type checker can tell what interfaces a class implements without any manual annotation.
-
-NOTE(goto): Hum, that's a good point, interfaces being structurally typed. @dimvar help me out here?
-
-NOTE(dimvar): It's like TypeScript. If you define explicitly that a class implements an interface, then the type checker checks that it does. If you don't, then you can pass class instances to places that expect the interface, and you would get warnings there. Another benefit of letting a class specify the interfaces it implements is that it's good for documentation.
-
-NOTE(domenic): That's a pretty dubious value proposition, IMO, for using up such valuable syntactic space and a keyword. (For example, people have proposed using `implements` in this position for runtime mixins.)
-
-NOTE(dimvar): Letting a class specify that it implements an interface has a few advantages: 1) An author of the library/module can say that class A implements B, and have that checked, even if there is no place in the library where an instance of A is passed to a context that expects a B. 2) When A explicitly says that it implements B, then checking that A is a subtype of B is quick, it's a tag check, otherwise, we have to structurally check it, which involves looking at all properties of B. If the specific word implements is too valuable, we could find some other keyword, or new syntax to express this.
-
-NOTE(domenic): Yes, I understood the advantages, I just think they are really marginal for the weight they add to a supposed MVP. (Especially one based on speed in a system which is known to make things slower.)
 
 ## Generics
 
@@ -391,8 +384,4 @@ Trailing parameters with default values should be considered optional by the typ
  
 NOTE(domenic): This seems subtle and hard to get my head around. (But not a real problem, just something tricky to work through.) E.g. if I declare this function: function a(value: number = 5) is that a "syntax error" since I didn't write number | undefined?
 
-### Type Inference?
- 
-NOTE: Flow departs from TypeScript significantly in its inference abilities, and I could imagine something much more like Flow. (Or, in general, wanting something with stronger inference capabilities, closer to Haskell/ML than Java in the amount of typing it requires.)
- 
-TODO(goto): articulate this better.
+

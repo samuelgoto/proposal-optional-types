@@ -5,7 +5,7 @@
  
 This is a [stage-0](https://tc39.github.io/process-document/) proposal to add [Optional Types](FAQ.md#terminology) to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
-For [prior art](FAQ.md#prior-art) (e.g. [other languages](FAQ.md#other-languages), [past proposals](FAQ.md#tc39-discussions)), [alternatives](FAQ.md#alternatives-considered) (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [challenges](FAQ.md#challenges) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
+For prior art (e.g. [other languages](FAQ.md#other-languages), [past proposals](FAQ.md#tc39-discussions)), alternatives considered (e.g. the [status quo](FAQ.md#status-quo), [gradual sound typing](FAQ.md#sound-gradual-typing), [decorators](FAQ.md#decorators) and [macros](FAQ.md#sound-gradual-typing)), [considerations](FAQ.md#considerations) and [sequencing](FAQ.md#sequencing) we encourage you to start with the [FAQ](FAQ.md).
  
 In the last 10 years, large engineering teams have developed type systems for JavaScript through a variety of preprocessors, transpilers and code editors to scale large codebases.
  
@@ -36,13 +36,9 @@ To kick things off we invite you to take a look at the following [strawman](#str
 
 To a large extent, like it was said [earlier](#introduction), this is more of a proposal for "**a**" typesystem (as opposed to "**this**" typesystem) and a process to get us there.
  
-We are collecting the set of discussion points in the ["open design questions" section](FAQ.md#the-type-system) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc).
+With this [strategy](FAQ.md#strategy) in mind, we are collecting the set of discussion points [here](https://github.com/samuelgoto/proposal-optional-types/issues) (e.g. subset of the minimally-maximal set, sequencing of features, nominal versus structural classes, generics, etc) and as the design choices find convergence we’ll pull them into this section, incrementally making this document converge into our collective choices.
  
-As a rule of thumb, we annotate the most tentative points with a [***](FAQ.md#the-type-system), pointing to the discussion point.
- 
-As the design choices find convergence in the ["open design questions" section](FAQ.md#the-type-system) we’ll pull them into this section, incrementally making this document converge into our collective choices.
- 
-With that in mind, at the core of the existing type systems - and hence of this strawman proposal - is **Optional Typing** [***](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
+At the core of the existing type systems - and hence of this strawman proposal - is [Optional Typing](FAQ.md#alternatives-considered): type checking that is processed at [development-time](FAQ.md#terminology) and erased at [production-time](FAQ.md#terminology).
 
 Effectively, most of the information in this proposal is applicable to [development-time](FAQ.md#terminology) tools (e.g. code editors, IDEs, compilers and developer tools in browsers). To the extent that new grammar/syntax is introduced and is to be erased - rather than rejected -, the semantics of interpretation of javascript in [production-mode](FAQ.md#terminology) remain unchanged.
  
@@ -64,7 +60,7 @@ We could really use some help with the art of [sequencing](FAQ.md#sequencing) he
 * The **Null** and **Undefined** types
 * **Built-in Object Types**: the built-in standard object types (Object, Function, Error, Array, Iterable, Promise, Number, Math, Date, Map, etc)
 * **User-defined Object Types**: structural types, interfaces, classes, functions arrays
-* **Union Types** (***): types that represent values that may have one of several distinct representations.
+* **Union Types**: types that represent values that may have one of several distinct representations.
 
 TODO(goto, domenic): A major missing piece is the type definitions for the standard library. We should also say something about the type definitions for the web platform, since that's JS's real standard library.
 
@@ -79,12 +75,12 @@ For the time being, we do not define the type checking rules in this document. W
 The design space for subtyping rules is big, and we have picked some semantics below but we understand they are subject to review and change. With that in mind, here is a strawman proposal:
 
 * The **Any** type to be a subtype and supertype of all types.
-* Classes to be [nominally typed](FAQ.md#structural-or-nominal-classes).
+* Classes to be [nominally typed](https://github.com/samuelgoto/proposal-optional-types/issues/4).
 * Objects types, interfaces and functions to be **structurally typed**.
 * To be safe to use objects with extra properties ([Width subtyping](https://flow.org/en/docs/lang/width-subtyping/)) in a position that is annotated with a specific set of properties.
 * Function parameters to be **contravariant** and function return values to be **covariant** ([Type variance](https://flow.org/en/docs/lang/variance/)).
 * NOTE(erights): should methods be **covariant** (per dart)? TODO(goto): check with @gbracha.
-* Arrays to be [covariant](FAQ.md#array-variance).
+* Arrays to be [covariant](https://github.com/samuelgoto/proposal-optional-types/issues/13).
 
 In the next section we’ll introduce the new syntax and with that give a lot of examples on these rules.
 
@@ -152,7 +148,7 @@ x = test ? 5 : "five"; // Ok
 x = test ? 0 : false; // Error, number | boolean not assignable
 ```
  
-Types are [non-nullable by default](FAQ.md#nullability-default), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
+Types are [non-nullable by default](https://github.com/samuelgoto/proposal-optional-types/issues/9), and types can be made nullable by using explicitly [the union type](FAQ.md#shorthands). Function parameters and object properties are required by default and can be made optional by using [union with undefined](FAQ.md#shorthands).
 
 ```javascript
 // Optional and Nullable Types
