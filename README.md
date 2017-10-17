@@ -1,4 +1,7 @@
 # Introduction
+
+- Authors: @samuelgoto, @dimvar, @gbracha
+- Early Reviewers: @adamk, @domenic, @waldemarhorwat, @erights, @slightlyoff, @avikchaudhuri (flow), @danielrosenwasser (typescript) 
  
 This is a [stage-0](https://tc39.github.io/process-document/) proposal to add [Optional Types](FAQ.md#terminology) to [JS](https://github.com/tc39/ecma262/) and bake them into the open web platform. 
  
