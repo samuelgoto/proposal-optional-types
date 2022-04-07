@@ -195,7 +195,7 @@ class Foo implements Bar {
 // TODO(goto): find a better example here.
 ```
  
-To create an Array type you can use Array<Type> where Type is the type of the elements of the array. You can use Array literals (e.g. string[] is equivalent to Array<string>) as a convenient shorthand. For example:
+To create an Array type you can use Array<Type> where Type is the type of the elements of the array. You can use Array literals (e.g. string[] is equivalent to Array\<string>) as a convenient shorthand. For example:
 
 ```javascript
 // Examples of Array Type Usage
